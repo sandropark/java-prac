@@ -1,15 +1,17 @@
 rootProject.name = 'java-prac'
 
-["sub"].each { moduleName ->
-    File moduleDir = makeDir(rootDir, moduleName)
+["sub"].each { topModuleName ->
+    File topModuleDir = makeDir(rootDir, topModuleName)
 
-    moduleDir.listFiles().each { subModuleDir ->
-        makeGradle(subModuleDir)
-        makeSrc(subModuleDir)
+    topModuleDir.listFiles().each { subModuleDir ->
+        subModuleDir.listFiles().each {moduleDir ->
+            makeGradle(moduleDir)
+            makeSrc(moduleDir)
 
-        def projectName = ":java-${subModuleDir.name}"
-        include projectName
-        project(projectName).projectDir = subModuleDir
+            def projectName = ":${subModuleDir.name}-${moduleDir.name}"
+            include projectName
+            project(projectName).projectDir = moduleDir
+        }
     }
 }
 

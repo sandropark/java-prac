@@ -1,0 +1,16 @@
+
+dependencies {
+    implementation 'net.bytebuddy:byte-buddy'
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+                'Premain-Class' : "com.sandro.MasulsaAgent",
+                'Can-Redefine-Classes' : true,
+                'Can-Retransform-Classes' : true)
+    }
+}
