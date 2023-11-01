@@ -1,0 +1,48 @@
+rootProject.name = 'java-prac'
+
+["sub"].each { moduleName ->
+    File moduleDir = makeDir(rootDir, moduleName)
+
+    moduleDir.listFiles().each { subModuleDir ->
+        makeGradle(subModuleDir)
+        makeSrc(subModuleDir)
+
+        def projectName = ":java-${subModuleDir.name}"
+        include projectName
+        project(projectName).projectDir = subModuleDir
+    }
+}
+
+private static File makeDir(File parentDri, String moduleName) {
+    def moduleDir = new File(parentDri, moduleName)
+    if (!moduleDir.exists())
+        moduleDir.mkdir()
+    moduleDir
+}
+
+private static void makeGradle(File moduleDir) {
+    def gradleFile = new File(moduleDir, "build.gradle")
+    if (!gradleFile.exists()) {
+        gradleFile.text =
+                """
+                dependencies {
+                
+                
+                }
+                """.stripIndent()
+    }
+}
+
+private static void makeSrc(File moduleDir) {
+    [
+            "src/main/java/com/sandro",
+            "src/main/resources",
+            "src/test/java/com/sandro",
+            "src/test/resources",
+    ].each { srcDir ->
+        def srcFolder = new File(moduleDir, srcDir)
+
+        if (!srcFolder.exists())
+            srcFolder.mkdirs()
+    }
+}
