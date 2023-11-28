@@ -1,0 +1,5 @@
+
+dependencies {
+    implementation 'com.google.auto.service:auto-service:1.1.1'
+    implementation 'com.github.olivergondza:maven-jdk-tools-wrapper:0.1'
+}
